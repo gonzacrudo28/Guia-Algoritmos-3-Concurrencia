@@ -20,19 +20,17 @@ public class ColaSincronizada {
         this.elementos = new LinkedList<>();
     }
     public static final Lock lock = new ReentrantLock();
-    public static Condition condicionLlenable = lock.newCondition();
-    public static Condition condicionNoLlenable = lock.newCondition();
+    public static Condition condicionNoVacia = lock.newCondition();
+    public static Condition condicionNoLlena = lock.newCondition();
 
     public void encolar(Integer elemento){
         lock.lock();
         try {
            while(elementos.size() == capacidad_maxima){
-                condicionLlenable.await();
+                condicionNoLlena.await();
             }
             elementos.add(elemento);
-            if (elementos.size() == capacidad_maxima) {
-                condicionNoLlenable.signalAll();
-            }
+            condicionNoVacia.signal();
 
         } catch (InterruptedException e){
             e.printStackTrace();
@@ -44,10 +42,10 @@ public class ColaSincronizada {
         lock.lock();
         try {
             while (elementos.isEmpty()) {
-                condicionLlenable.await();
+                condicionNoVacia.await();
             }
             Integer desencolado = elementos.remove(0);
-            condicionLlenable.signalAll();
+            condicionNoLlena.signal();
             return desencolado;
 
         } catch (InterruptedException e) {
