@@ -1,0 +1,123 @@
+(★★) Partiendo de la relacion progenitor(a, b) que representan que a es padre o madre de b, y la siguiente base de conocimiento:
+progenitor(a,b).  % 1
+progenitor(a,c).  % 2
+progenitor(b,d).  % 3
+progenitor(b,e).  % 4
+progenitor(c,f).  % 5
+
+hermano(X,Y):- progenitor(Z,X),progenitor(Z,Y), dif(X,Y).
+primo(X,Y):- progenitor(Z,X),progenitor(W,Y),hermanos(Z,W), dif(Z,W).
+nieto(X,Y):- progenitor(Y,W), progenitor(W,X).
+descendiente(X,Y):- 
+    progenitor(Y,X).
+descendiente(X,Y):-
+    progenitor(W, X), descendiente(W,Y).
+
+1(★★★) Dadas la siguiente base de conocimiento:
+byCar(auckland,hamilton).
+byCar(hamilton,raglan).
+byCar(valmont,saarbruecken).
+byCar(valmont,metz).
+
+byTrain(metz,frankfurt).
+byTrain(saarbruecken,frankfurt).
+byTrain(metz,paris).
+byTrain(saarbruecken,paris).
+
+byPlane(frankfurt,bangkok).
+byPlane(frankfurt,singapore).
+byPlane(paris,losAngeles).
+byPlane(bangkok,auckland).
+byPlane(singapore,auckland).
+byPlane(losAngeles,auckland).
+
+Escribir un predicado travel que permita averiguar si es posible o no viajar de una ciudad a otra, ya sea en uno o más tramos.
+travel(X, Y):- 
+    byCar(X,Y).
+travel(X,Y):-
+    byTrain(X,Y).
+travel(X,Y):-
+    byPlane(X,Y).
+travel(X,Y):-
+    byCar(X,W),travel(W, Y).
+travel(X,Y):-
+    byPlane(X,W), travel(W, Y).
+travel(X,Y):-
+    byTrain(X,W), travel(W, Y).
+    
+1(★) Definir la relación máximo(X,Y,Z) que se verifique si Z es el máximo de X e Y.
+max(X,Y,Z):- 
+    X > Y, X = Z.
+max(X,Y,Z) :-
+    Y > X, Y = Z.
+    
+2(★★) Definir la relación fatorial(X,Y) que se verifique si Y es el factorial de X.
+fatorial(0,1).
+fatorial(1,1).
+fatorial(X,Y):-
+    F is X-1, fatorial(F,W), Y is W*X.
+    
+3(★★★) La sucesión de Fibonacci es 0,1,1,2,3,5,8,13,21,. . . en la que cada término, salvo los dos primeros, es la suma de los dos anteriores. Definir la relación fibonai(N,X) que se verifique si X es el N–ésimo término de la sucesión de Fibonacci.
+fibonai(0,0).
+fibonai(1,1).
+fibonai(N,X) :-
+   N > 1,
+   N1 is N-1,
+   N2 is N-2,
+   fibonai(N1, X1),
+   fibonai(N2,X2),
+    X is X1 + X2.
+    
+
+1(★) Definir la relación cons(X,L1,L2) que se verifique si L2 es la lista obtenida añadiéndole X a L1 como primer elemento.
+cons(X,L1,L2):-
+    L2 = [X|L1]. 
+
+
+2(★) Un palíndromo es una palabra que se lee igual en los dos sentidos, por ejemplo “oso”. Definir la relación palíndromo(L) que se verifique si la lista L es un palíndromo.
+palindromo([_]).
+palindromo([]).
+palindromo([H|T]):-
+	append(Sublist, [H], T),
+    palindromo(Sublist).
+    
+    
+3(★)Definir la relación todos_iguales(L) que se verifique si todos los elementos de la lista L son iguales entre sí.    
+todos_iguales([_]).
+todos_iguales([]).
+
+todos_iguales([H|T]):-
+    primer_elemento(T,F),
+    H = F,
+    todos_iguales(T).
+
+primer_elemento([H|_], H).
+    
+4(★★)Definir la relación max_lista(L,X) que se verifique si X es el máximo de la lista de números L.
+max_lista(L,X):-
+    member(X,L),
+    max_lista_w(X,L).
+max_lista_w(X,[]).
+max_lista_w(X,[H|T]):-
+    X >= H, max_lista_w(X, T).
+    
+5(★★★)Definir la relación elemento_en(K,L,X) que se verifique si X es el K–ésimo elemento de la lista L (se empieza a numerar en 1).
+elemento_en(1,[X|_], X).
+elemento_en(K,L,X):-
+    K > 1,
+    K1 is K - 1,
+    elemento_en(K1, L, X).
+        
+
+  
+    
+    
+
+
+    
+    
+    
+    
+    
+
+    
