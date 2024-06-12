@@ -194,3 +194,10 @@ Una lista es duplicada si está compuesta por dos bloques consecutivos de los mi
 
 duplicada(Lista):-
     append(A,A,Lista).
+
+Dada una lista devolver el penultimo
+devolver_penultimo([X,_], X).
+
+devolver_penultimo([_|T], X):-
+    devolver_penultimo(T, X).
+    
