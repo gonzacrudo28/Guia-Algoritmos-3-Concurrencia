@@ -200,4 +200,11 @@ devolver_penultimo([X,_], X).
 
 devolver_penultimo([_|T], X):-
     devolver_penultimo(T, X).
+
+%suma elementos lista
+suma_todo([],0).
+
+suma_todo([H|T], Inicio):-
+    suma_todo(T, Suma),
+    Inicio is H + Suma. 
     
