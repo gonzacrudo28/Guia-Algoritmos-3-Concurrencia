@@ -143,17 +143,54 @@ puedo_colorear(A, B, C, D, E) :-
     D \= A, D \= B, D \= C, D \= E,
     E \= A, E \= B, E \= C, E \= D.
 
+Sean las siguientes cláusulas que describen algunas localidades que están conectadas con un tramo de tren:  
+
+trenDirecto(saarbruecken,dudweiler).
+trenDirecto(forbach,saarbruecken).
+trenDirecto(freyming,forbach).
+trenDirecto(stAvold,freyming).
+trenDirecto(fahlquemont,stAvold).
+trenDirecto(metz,fahlquemont).
+trenDirecto(nancy,metz).
+
+Escribir un predicado viajar/2 que permita averiguar si es posible o no viajar de una localidad a otra, ya sea en uno o más tramos de tren. Por ejemplo, viajar(nancy,saarbruecken) debe dar verdadero.        
+
+viajar(X,Y):-
+    trenDirecto(X,Y).
+viajar(X,Y):-
+    trenDirecto(X,Z), viajar(Z,Y).
 
 
-  
-    
-    
+Sea la siguiente base de datos:
 
+traduccion(eins,uno).
+traduccion(zwei,dos).
+traduccion(drei,tres).
+traduccion(vier,cuatro).
+traduccion(fuenf,cinco).
+traduccion(sechs,seis).
+traduccion(sieben,siete).
+traduccion(acht,ocho).
+traduccion(neun,nueve).
 
-    
-    
-    
-    
-    
+Escribir el predicado traduccionLista(A,E) que produzca la traducción de una lista de números etre alemán y español. 
 
-    
+traduccion(eins,uno).
+traduccion(zwei,dos).
+traduccion(drei,tres).
+traduccion(vier,cuatro).
+traduccion(fuenf,cinco).
+traduccion(sechs,seis).
+traduccion(sieben,siete).
+traduccion(acht,ocho).
+traduccion(neun,nueve).
+traduccionLista([],[]).
+
+traduccionLista([Ha|Ta],[He|Te]):-
+    traduccion(Ha,He),
+    traduccionLista(Ta, Te).
+
+Una lista es duplicada si está compuesta por dos bloques consecutivos de los mismos elementos. Por ejemplo [a,b,c,a,b,c] es duplicada. Escribir un predicado duplicada(Lista) que determine si la lista es duplicada o no.
+
+duplicada(Lista):-
+    append(A,A,Lista).
