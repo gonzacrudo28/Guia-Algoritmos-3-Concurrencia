@@ -207,4 +207,29 @@ suma_todo([],0).
 suma_todo([H|T], Inicio):-
     suma_todo(T, Suma),
     Inicio is H + Suma. 
-    
+
+%Definir la relación ordenada(+L) que se verifique si la lista de números L está ordenada de manera creciente
+esta_ordenade([_]).
+
+esta_ordenade([H,F|T]):-
+    H =< F,
+    esta_ordenade([F|T]).
+
+%haceme len vieja
+len([],0).
+len([_|T], Suma):-
+    len(T, Sumareducida),
+    Suma is Sumareducida + 1.
+
+%haceme member x, pertenece a la lista Y
+niembro(X,[_|T]):-
+    niembro(X,T).
+niembro(X, [H|_]) :-
+    X = H.
+
+% te paso 4,9 y una lista []-> 4,5,6,7,8,9
+llenarLista(X,X,[X]).
+llenarLista(X,Y, [X|T]):-
+    X =< Y,
+    X1 is X + 1,
+    llenarLista(X1,Y,T).
