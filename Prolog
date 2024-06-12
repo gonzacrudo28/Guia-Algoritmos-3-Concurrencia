@@ -107,7 +107,43 @@ elemento_en(K,L,X):-
     K > 1,
     K1 is K - 1,
     elemento_en(K1, L, X).
-        
+
+
+
+1(★★★) Se tiene el siguiente mapa compuesto por 5 regiones (A, B, C, D y E), se desea identificar si es posible colorear el mapa usando solo 4 colores, de forma tal que ninguna region sea adyacente a otra región con el mismo color.
+color(rojo).
+color(verde).
+color(azul).
+color(amarillo).
+
+adyacente(a, b).
+adyacente(a, d).
+adyacente(a, e).
+adyacente(b, a).
+adyacente(b, e).
+adyacente(b, c).
+adyacente(b, d).
+adyacente(c, b).
+adyacente(c, e).
+adyacente(c, d).
+adyacente(d, a).
+adyacente(d, b).
+adyacente(d, c).
+adyacente(d, e).
+adyacente(e, a).
+adyacente(e, b).
+adyacente(e, c).
+adyacente(e, d).
+
+puedo_colorear(A, B, C, D, E) :-
+    color(A), color(B), color(C), color(D), color(E),
+    A \= B, A \= D, A \= E,
+    B \= A, B \= E, B \= C, B \= D,
+    C \= B, C \= E, C \= D,
+    D \= A, D \= B, D \= C, D \= E,
+    E \= A, E \= B, E \= C, E \= D.
+
+
 
   
     
