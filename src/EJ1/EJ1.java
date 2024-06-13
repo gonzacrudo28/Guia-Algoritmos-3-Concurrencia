@@ -1,5 +1,5 @@
 package EJ1;
-
+//prueba
 public class EJ1 {
     // Escribir un programa que cree un hilo extendiendo la clase Thread y otro hilo implementando la interfaz Runnable.
     // Ambos hilos deben imprimir mensajes en la consola en un ciclo infinito. Observar el orden en que se imprimen los
