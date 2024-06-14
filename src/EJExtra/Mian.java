@@ -16,48 +16,51 @@ public class Mian {
         this.actual = 0;
     }
 
-    public void imprimirPrimerosNPrimos(){
-        for (int i = 0; i <= maximo; i++ ){
-            int finalI = i;
-            new Thread(() -> {
-                try{
-                    lock.lock();
+    public void imprimirNPrimos(){
+        Thread tPrimos = new Thread(() -> {
+            lock.lock();
+            try{
+                for (int i =0; i < maximo; i++){
                     while(!esPrimo(actual)){
                         ultimoNoPrimo.await();
                     }
-                    System.out.println(finalI);
+                    if (actual>= maximo){
+                        break;
+                    }
+                    System.out.println(actual);
+                    actual++;
                     ultimoPrimo.signal();
-                    actual ++;
 
-                } catch (InterruptedException e){
-                    e.printStackTrace();
-                } finally {
-                    lock.unlock();
                 }
-            }).start();
-        }
-    }
-    public void verPrimerosNNoPrimos(){
-        for (int i = 0; i <= maximo; i++ ){
-            int finalI = i;
-            new Thread(() -> {
-                try{
-                    lock.lock();
+            } catch (InterruptedException e){
+                e.printStackTrace();
+            } finally {
+                lock.unlock();
+            }
+
+        });
+        Thread noPrimos = new Thread(() -> {
+            lock.lock();
+            try{
+                for (int i =0; i < maximo; i++){
                     while(esPrimo(actual)){
                         ultimoPrimo.await();
                     }
-                    System.out.println(finalI);
+                    if (actual >= maximo){
+                        break;
+                    }
+                    actual++;
                     ultimoNoPrimo.signal();
-                    actual ++;
-
-                } catch (InterruptedException e){
-                    e.printStackTrace();
-                } finally {
-                    lock.unlock();
                 }
-            }).start();
-        }
+            } catch (InterruptedException e){
+                e.printStackTrace();
+            } finally {
+                lock.unlock();
+            }
+
+        });
     }
+
 
     public boolean esPrimo(int n){
         if (n <= 1){
